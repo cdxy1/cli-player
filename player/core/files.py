@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Dict
 
 
-from .music import start_playlist
+from .music import play_track
 
 DEFAULT_DIR_PATH = Path.home() / "Music" / "cliPlayer"
 
@@ -14,6 +14,10 @@ def init_main_dir(path: str):
         Path(path).mkdir()
     else:
         pass
+
+
+def check_main_dir():
+    return True if DEFAULT_DIR_PATH.exists() else False
 
 
 def make_playlist_dir(name: str):
@@ -30,8 +34,8 @@ def playlists_list():
     return pl_dict
 
 
-def select_playlist(pl_dict: Dict[str, Path], pl_num: int):
+def select_pl_dir(pl_dict: Dict[str, Path], pl_num: int):
     pl_dir = [list(i) for i in pl_dict.values()][pl_num]
 
     for track in pl_dir[0].iterdir():
-        start_playlist(track)
+        play_track(track)
