@@ -53,6 +53,31 @@ def show_playlists():
     return pl_lst
 
 
+def playlist_ended(lst, num):
+    current_num = num
+
+    while True:
+        click.echo(
+            "\nWhat next?:\n1. Next playlist\n2. Retry current playlist\n3. Choose another playlist"
+        )
+        step = click.prompt("Enter the action", type=int)
+
+        match step:
+            case 1:
+                try:
+                    select_pl_dir(lst, current_num + 1)
+                    current_num += 1
+                except IndexError:
+                    click.echo("It was the last playlist!!!")
+                    break
+            case 2:
+                select_pl_dir(lst, num)
+            case 3:
+                break
+            case _:
+                click.echo("Enter a valid action.")
+
+
 def select_playlist():
     while True:
         pl_lst = show_playlists()
@@ -67,6 +92,7 @@ def select_playlist():
             continue
         else:
             select_pl_dir(pl_lst, num)
+            playlist_ended(pl_lst, num)
 
 
 @cli.command()
