@@ -22,7 +22,7 @@ A simple command-line music player built with Python and Click.
 4. **Run the Application**:
   
 `````console
-$ python main.py # Windows
+$ python main.py  # Windows
 $ python3 main.py # Unix
 `````
 
