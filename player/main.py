@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import click
 
 from core.files import init_main_dir, check_main_dir
