@@ -1,5 +1,7 @@
-from pathlib import Path
 from typing import Dict
+from pathlib import Path
+
+import click
 
 
 from .music import play_track
@@ -38,4 +40,5 @@ def select_pl_dir(pl_dict: Dict[str, Path], pl_num: int):
     pl_dir = [list(i) for i in pl_dict.values()][pl_num]
 
     for track in pl_dir[0].iterdir():
+        click.clear()
         play_track(track)
