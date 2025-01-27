@@ -22,10 +22,11 @@ def start():
     while True:
         choice = select_menu()
 
-        if choice == 1:
-            select_playlist()
-        elif choice == 2:
-            make_playlist()
+        match choice:
+            case 1:
+                select_playlist()
+            case 2:
+                make_playlist()
 
 
 if __name__ == "__main__":
