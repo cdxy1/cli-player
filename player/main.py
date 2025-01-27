@@ -75,11 +75,18 @@ def playlist_ended(lst, num):
                 click.echo(f"Press something to select option. S({sec})")
                 try:
                     if _ := inputimeout(timeout=1):
+                        import sys, termios
+
                         flag = False
+                        termios.tcflush(sys.stdin, termios.TCIFLUSH)
                 except TimeoutOccurred:
-                    pass
+                    continue
             else:
-                step = click.prompt("Enter the action", type=int)
+                click.clear()
+                click.echo(
+                    "\nWhat next?:\n1. Next playlist\n2. Retry current playlist\n3. Choose another playlist"
+                )
+                step = click.prompt("Enter a action", type=int)
                 break
         else:
             step = 1
@@ -91,11 +98,10 @@ def playlist_ended(lst, num):
                     current_num += 1
                     flag = True
                 except IndexError:
-                    click.clear()
                     click.echo("It was the last playlist!!!")
                     break
             case 2:
-                select_pl_dir(lst, num)
+                select_pl_dir(lst, current_num)
                 flag = True
             case 3:
                 break
