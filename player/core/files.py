@@ -3,7 +3,6 @@ from pathlib import Path
 
 import click
 
-
 from .music import play_track
 
 DEFAULT_DIR_PATH = Path.home() / "Music" / "cliPlayer"
