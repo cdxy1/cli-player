@@ -1,3 +1,5 @@
+import time
+
 import click
 from .utlis import inputimeout, TimeoutOccurred
 
@@ -56,7 +58,7 @@ def show_playlists():
     return pl_lst
 
 
-def playlist_ended(lst, num):
+def playlist_ended(pl_dict: dict, num: int):
     flag = True
     current_num = num
     menu = f"{click.style('What next?', bold=True)}:\n1. Next playlist\n2. Retry current playlist\n3. Choose another playlist\n"
@@ -91,14 +93,15 @@ def playlist_ended(lst, num):
         match step:
             case 1:
                 try:
-                    select_pl_dir(lst, current_num + 1)
+                    select_pl_dir(pl_dict, current_num + 1)
                     current_num += 1
                     flag = True
                 except IndexError:
                     click.secho("It was the last playlist!!!", bold=True, fg="yellow")
+                    time.sleep(0.5)
                     break
             case 2:
-                select_pl_dir(lst, current_num)
+                select_pl_dir(pl_dict, current_num)
                 flag = True
             case 3:
                 break
@@ -116,9 +119,7 @@ def select_playlist():
             num = click.prompt(click.style("Choose playlist", bold=True), type=int)
             if num > len(pl_lst.keys()) or num < 0:
                 click.secho("Number out of range.", bold=True, fg="yellow")
-                continue
-            elif not isinstance(num, int):
-                click.secho("Arg must be integer.", bold=True, fg="yellow")
+                time.sleep(0.5)
                 continue
             else:
                 select_pl_dir(pl_lst, num)
