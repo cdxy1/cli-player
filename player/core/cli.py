@@ -11,6 +11,7 @@ from .files import (
 def select_menu():
     while True:
         click.clear()
+
         click.echo(
             f"{click.style('Select or create playlist:', bold=True)}\n 1. Select playlist\n 2. Create playlist\n"
         )
@@ -44,12 +45,13 @@ def make_playlist():
 
 def show_playlists():
     pl_lst = playlists_list()
-    click.clear()
-    click.echo(f"{click.style('Playlists', bold=True)}:\n==========")
-    for num, key in enumerate(pl_lst.keys()):
-        click.echo(f"{click.style(num, bold=True)}. {key.title()}")
-    else:
-        click.echo("==========\n")
+    if pl_lst:
+        click.clear()
+        click.echo(f"{click.style('Playlists', bold=True)}:\n==========")
+        for num, key in enumerate(pl_lst.keys()):
+            click.echo(f"{click.style(num, bold=True)}. {key.title()}")
+        else:
+            click.echo("==========\n")
 
     return pl_lst
 
@@ -110,13 +112,17 @@ def select_playlist():
     while True:
         pl_lst = show_playlists()
 
-        num = click.prompt(click.style("Choose playlist", bold=True), type=int)
-        if num > len(pl_lst.keys()) or num < 0:
-            click.secho("Number out of range.", bold=True, fg="yellow")
-            continue
-        elif not isinstance(num, int):
-            click.secho("Arg must be integer.", bold=True, fg="yellow")
-            continue
+        if pl_lst:
+            num = click.prompt(click.style("Choose playlist", bold=True), type=int)
+            if num > len(pl_lst.keys()) or num < 0:
+                click.secho("Number out of range.", bold=True, fg="yellow")
+                continue
+            elif not isinstance(num, int):
+                click.secho("Arg must be integer.", bold=True, fg="yellow")
+                continue
+            else:
+                select_pl_dir(pl_lst, num)
+                playlist_ended(pl_lst, num)
+                return True
         else:
-            select_pl_dir(pl_lst, num)
-            playlist_ended(pl_lst, num)
+            return

@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import time
+
 import click
 
 from core.files import init_main_dir, check_main_dir
@@ -13,20 +15,18 @@ def cli():
 
 @cli.command()
 def start():
-    if not check_main_dir:
-        path = click.prompt(
-            click.style("Enter default dir path or leave blank", bold=True),
-            type=str,
-            default="",
-        )
-        init_main_dir(path)
+    if not check_main_dir():
+        init_main_dir()
 
     while True:
         choice = select_menu()
 
         match choice:
             case 1:
-                select_playlist()
+                if not select_playlist():
+                    click.secho("There is nothing!", bold=True, fg="yellow")
+                    time.sleep(0.5)
+                    continue
             case 2:
                 make_playlist()
 

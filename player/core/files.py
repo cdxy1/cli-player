@@ -8,17 +8,15 @@ from .music import play_track
 DEFAULT_DIR_PATH = Path.home() / "Music" / "cliPlayer"
 
 
-def init_main_dir(path: str):
+def init_main_dir():
     if not DEFAULT_DIR_PATH.exists():
         DEFAULT_DIR_PATH.mkdir()
-    elif path != "":
-        Path(path).mkdir()
     else:
         pass
 
 
 def check_main_dir():
-    return True if DEFAULT_DIR_PATH.exists() else False
+    return DEFAULT_DIR_PATH.exists()
 
 
 def make_playlist_dir(name: str):
